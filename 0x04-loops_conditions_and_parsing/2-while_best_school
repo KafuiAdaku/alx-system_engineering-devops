@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This code demonstates bash's while loop usage
+
+i=0
+while [ $i -lt 10 ]; do
+	echo "Best School"
+	((i++))
+done
