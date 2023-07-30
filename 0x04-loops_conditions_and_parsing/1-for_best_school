@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 # This code simply demonstrates bash's for loop usage
 
 for _ in {1..10}
