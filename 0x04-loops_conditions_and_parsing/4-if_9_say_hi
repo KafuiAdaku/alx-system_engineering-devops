@@ -2,7 +2,7 @@
 # This code demonstrates the usage of loops with conditionals
 
 i=1
-for i in {1..10}
+while [ $i -le 10 ]
 do
 	if [ $i -eq 9 ]; then
 		echo "Hi"
@@ -10,4 +10,5 @@ do
 	else
 		echo "Best School"
 	fi
+	((i++))
 done
