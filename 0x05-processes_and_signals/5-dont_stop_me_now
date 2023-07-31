@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# A bash script that terminates  a process using the kill command
+
+pkill 4-to_infinity_and_beyond
