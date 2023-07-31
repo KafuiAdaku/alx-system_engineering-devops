@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# A bash script demostrating the use of trap command
+# A script that displays "To infinity and beyond"
 
-trap "echo 'I am invincible!!!'" SIGTERM
-while "true"
+trap 'echo "I am invincible!!!"' SIGTERM
+while true
 do
 	echo "To infinity and beyond"
 	sleep 2
