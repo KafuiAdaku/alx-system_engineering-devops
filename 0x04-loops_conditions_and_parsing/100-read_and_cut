@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# A bash script that displays the content of the file /etc/passwd
+
+LIST=$( cat /etc/passwd )
+while IFS=":" read -r username _ usrid _ _ homedir _; do
+	echo "$username:$usrid:$homedir"
+done <<< "$LIST"
