@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # A bash script demostrating the use of trap command
 
-trap "echo 'I am invincible'" SIGINT
+trap '(( echo "I am invincible!!!" ))' SIGINT
 while "true"; do
 	echo "To infinity and beyond"
 	sleep 2
