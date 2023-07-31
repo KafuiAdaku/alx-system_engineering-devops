@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# A bash script that terminates  a process using the pkill command
+
+pkill -f 7-highlander
