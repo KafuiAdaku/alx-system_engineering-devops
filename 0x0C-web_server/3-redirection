@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# A bash script to configure an Nginx server so that
+# `/redirect_me` is redirecting to another page.
+# Requirements:
+#   * The redirection must be a “301 Moved Permanently”
+#   * You answer file should be a Bash script containing commands
+#     to automatically configure a Ubuntu machine to respect above requirements
+#   * Using what you did with 1-install_nginx_web_server, write 3-redirection
+#     so that it configures a brand new Ubuntu machine to the requirements asked
+#     in this task
+sudo apt-get update                                                                                                                                        
+sudo apt-get install nginx
+echo "Hello World!" |sudo tee /var/www/html/index.html > /dev/null
+
+# redirection
+pattern="server_name _;"
+replacement="server_name _;\n\n\trewrite ^/redirect_me https://google.com permanent\n"
+sudo sed -i "s|$pattern|$replacement|" /etc/nginx/sites-available/default
+sudo service nginx restart
