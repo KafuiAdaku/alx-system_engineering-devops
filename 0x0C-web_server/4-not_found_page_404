@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Configure your Nginx server to have a custom 404 page
+# that contains the string Ceci n'est pas une page
+
+sudo apt-get update
+sudo apt-get install nginx -y
+echo "Hello World!" |sudo tee /var/www/html/index.html > /dev/null
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/not_found.html > /dev/null
+ 
+# redirection
+pattern="server_name _"
+redirect="server_name _;\nrewrite ^/redirect_me https://google.com permanent"
+not_found="server_name _;\n\terror_page 404 /not_found.html"
+sudo sed -i "s|$pattern|$redirect|" /etc/nginx/sites-available/default
+sudo sed -i "s|$pattern|$not_found|" /etc/nginx/sites-available/default
+sudo service nginx restart

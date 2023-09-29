@@ -9,7 +9,7 @@
 #     so that it configures a brand new Ubuntu machine to the requirements asked
 #     in this task
 sudo apt-get update                                                                                                                                        
-sudo apt-get install nginx
+sudo apt-get install nginx -y
 echo "Hello World!" |sudo tee /var/www/html/index.html > /dev/null
 
 # redirection
