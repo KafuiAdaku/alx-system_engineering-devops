@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Configure Nginx so that its HTTP response contains a custom header (on `web-01` and `web-02`)
+# The name of the custom HTTP header must be `X-Served-By`
+# The value of the custom HTTP header must be the hostname of the server Nginx is running on
+
+# update and install nginx
+sudo apt-get update
+sudo apt-get install nginx -y
+
+# configure firewall to listen on port 80 & setup `index.html` page
+sudo ufw allow "Nginx HTTP"
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+
+# redirection and custom header definition to display hostname
+pattern="server_name _;"
+replacement="server_name _;\n\tadd_header X-Served-By \$hostname;\n\trewrite ^/redirect_me https://google.com permanent;\n"
+sudo sed -i "s|$pattern|$replacement|" /etc/nginx/sites-available/default
+
+# page-not-found redirection
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/not_found.html > /dev/null
+not_found="server_name _;\n\terror_page 404 /not_found.html;"
+sudo sed -i "s|$pattern|$not_found|" /etc/nginx/sites-available/default
+
+# restart nginx
+sudo service nginx restart
