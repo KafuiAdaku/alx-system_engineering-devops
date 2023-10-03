@@ -12,7 +12,7 @@ package {'nginx':
 # Update config file with custom header
 file_line {'add_custom_header':
   ensure  => present,
-  line    => "\tserver_name _;\n\tadd_header X-Served-By \"$hostname\";",
+  line    => "\tserver_name _;\n\tadd_header X-Served-By 127.0.0.1;",
   match   => 'server_name _;',
   path    => '/etc/nginx/sites-available/default',
   require => Package['nginx'],
