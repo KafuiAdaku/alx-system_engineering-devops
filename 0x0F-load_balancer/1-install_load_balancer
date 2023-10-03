@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# A script that installs and configures HAproxy on your lb-01 server.
+# Requirements:
+#   * Configure HAproxy so that it send traffic to web-01 and web-02
+#   * Distribute requests using a roundrobin algorithm
+#   * Make sure that HAproxy can be managed via an init script
+
+sudo apt-get update
+sudo apt-get install haproxy -y
+
+server_conf="
+frontend loadbal
+    bind *:80
+    mode http
+    default_backend loadbalance
+
+backend loadbalance
+    balance roundrobin
+    server 195252-web-01 100.24.205.66:80 check
+    server 195252-web-02 100.26.57.118:80 check
+"
+
+echo "$server_conf" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
+
+# enalbes HAProxy to start at bootime
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy > /dev/null
+
+sudo service haproxy restart
