@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#  A Bash script that will display information about subdomains
+
+dom="$1"
+subdom="$2"
+fqdom=""
+param_valid() {
+local regex='^[0-9]+$'
+    # check if domain is not empty or a number
+    if [ -z "$dom" ] || [[ "$dom" =~ $regex ]]
+    then
+        echo "Domain name cannot be null or a number"
+        return 1
+    fi
+
+    # check if subdomain is empty and not a number
+    if [ -n "$subdom" ] && ! [[ "$subdom" =~ $regex ]]
+    then
+        fqdom="$subdom.$dom"
+        return  0
+    else
+        fqdom="$dom"
+        return 2
+   fi
+}
+
+sub_domains=("www" "lb-01" "web-01" "web-02")
+
+info() {
+    param_valid
+    stat="$?"
+    if [ "$stat" -eq 0 ]
+    then
+        # domain_name="$( dig "$fqdom" | grep -A1 'ANSWER SECTION:' | awk 'NR == 2{print $1"}')"
+        rec_type="$( dig "$fqdom" | grep -A1 'ANSWER SECTION:' | awk 'NR == 2 {print $4}')"
+        ip_add="$( dig "$fqdom" | grep -A1 'ANSWER SECTION:' | awk 'NR == 2{print $5}')"
+        echo "The subdomain $subdom is a $rec_type record and points to $ip_add"
+    elif [ "$stat" -eq 2 ]
+    then
+        for sub_domain in "${sub_domains[@]}"
+        do
+            # domain_name="$( dig "$sub_domain" | grep -A1 'ANSWER SECTION:' | awk 'NR == 2 {print $1"}')"
+            fqdom="$sub_domain.$dom"
+            rec_type="$( dig "$fqdom" | grep -A1 'ANSWER SECTION:' | awk 'NR == 2 {print $4}')"
+            ip_add="$( dig "$fqdom" | grep -A1 'ANSWER SECTION:' | awk 'NR == 2 {print $5}')"
+
+            echo "The subdomain $sub_domain is a $rec_type record and points to $ip_add"
+        done
+    fi
+}
+
+info
