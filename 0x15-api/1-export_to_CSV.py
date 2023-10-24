@@ -23,13 +23,12 @@ if __name__ == "__main__":
     user = json.loads(user_response.text)
     employee_name = user["name"]
 
-    with open(f"{employee_id}.csv", "w", newline="") as csvfile:
+    with open(f"{employee_id}.csv", "w") as csvfile:
         fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS",
                       "TASK_TITLE"]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames,
                                 quoting=csv.QUOTE_ALL)
         # writer.writeheader()
-
         for todo in todos:
             writer.writerow({
                 "USER_ID": employee_id,
