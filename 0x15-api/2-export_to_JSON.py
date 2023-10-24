@@ -23,7 +23,7 @@ if __name__ == "__main__":
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     user_response = requests.get(user_url)
     user = json.loads(user_response.text)
-    employee_name = user["name"]
+    username = user["username"]
 
     export_dict = {}
     my_list = []
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         my_dict = {}
         my_dict["task"] = todo['title']
         my_dict["completed"] = todo["completed"]
-        my_dict["username"] = employee_name
+        my_dict["username"] = username
         my_list.append(my_dict)
 
     export_dict[employee_id] = my_list
