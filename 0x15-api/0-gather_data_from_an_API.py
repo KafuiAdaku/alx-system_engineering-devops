@@ -22,7 +22,8 @@ import json
 if __name__ == "__main__":
     employee_id = sys.argv[1]
 
-    todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+    todos_url = f"https://jsonplaceholder.typicode.com/users/\
+{employee_id}/todos"
     todos_response = requests.get(todos_url)
     todos = json.loads(todos_response.text)
 
@@ -34,9 +35,8 @@ if __name__ == "__main__":
     total_task = len(todos)
     completed_tasks = sum(1 for todo in todos if todo["completed"])
 
-
     print(f"Employee {employee_name} is done with \
-    tasks({completed_tasks}/{total_task}):")
+tasks({completed_tasks}/{total_task}):")
     for todo in todos:
         if todo["completed"]:
             print("\t " + todo["title"])
