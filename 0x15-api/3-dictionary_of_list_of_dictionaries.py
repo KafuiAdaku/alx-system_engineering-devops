@@ -34,4 +34,5 @@ userId={user_id}"
 
         todos_dict[user_id] = task_list
 
-    print(todos_dict)
+    with open("todo_all_employees.json", "w", encoding="utf=8") as f:
+        json.dump(todos_dict, f)
