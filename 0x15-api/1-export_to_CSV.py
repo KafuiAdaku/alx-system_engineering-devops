@@ -21,7 +21,7 @@ if __name__ == "__main__":
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     user_response = requests.get(user_url)
     user = json.loads(user_response.text)
-    employee_name = user["name"]
+    username = user["username"]
 
     with open(f"{employee_id}.csv", "w") as csvfile:
         fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS",
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         for todo in todos:
             writer.writerow({
                 "USER_ID": employee_id,
-                "USERNAME": employee_name,
+                "USERNAME": username,
                 "TASK_COMPLETED_STATUS": todo['completed'],
                 "TASK_TITLE": todo['title']
                 })
