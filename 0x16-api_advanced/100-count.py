@@ -36,5 +36,6 @@ def count_words(subreddit, word_list, after=None, counts=None):
             return count_words(subreddit, word_list, after, counts)
         else:
             return counts
+
     else:
         return None
