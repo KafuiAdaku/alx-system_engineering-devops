@@ -12,12 +12,12 @@ def count_words(subreddit, word_list, after=None, counts=None):
     if counts is None:
         counts = {}
 
-    url = f"https://www.reddit.com/r/{subreddit}/about.json?limit=10"
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
     if after:
         url += f"&after={after}"
 
     headers = {"User-Agent": "My Custom Header"}
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
     if response.status_code == 200:
         data = response.json()
@@ -35,7 +35,7 @@ def count_words(subreddit, word_list, after=None, counts=None):
         if after:
             return count_words(subreddit, word_list, after, counts)
         else:
-            return counts
-
-    else:
-        return None
+            srt_cnt = sorted(counts.items(),
+                             key=lambda x: (-x[1], x[0].lower()))
+            for keyword, count in srt_cnt:
+                print(f"{keyword.lower()}: {count}")
