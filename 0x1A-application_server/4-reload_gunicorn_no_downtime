@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# A bash script to reload gunicorn in a graceful way
+
+# obtain Gunicorn PID
+GUNICORN_PID=$(sudo pgrep "gunicorn")
+
+# check if Gunicorn is running
+if [ -z "$GUNICORN_PID" ]
+then
+    echo "Gunicorn is not running"
+    exit 1
+fi
+
+echo "Restart Gunicorn..."
+
+for pid in $GUNICORN_PID
+do
+    echo "killing process with pid $pid"
+    sudo kill -s HUP "$pid"
+done
+
+echo "Gunicorn restarted successfully"
+
