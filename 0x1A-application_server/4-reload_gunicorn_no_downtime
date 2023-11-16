@@ -19,5 +19,8 @@ do
     sudo kill -s HUP "$pid"
 done
 
+# Wait for a short duration to allow workers to finish ongoing requests
+sleep 5
+
 echo "Gunicorn restarted successfully"
 
