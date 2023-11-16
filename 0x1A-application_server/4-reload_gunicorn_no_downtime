@@ -2,10 +2,10 @@
 # A bash script to reload gunicorn in a graceful way
 
 # obtain Gunicorn PID
-GUNICORN_PID=$(sudo pgrep "gunicorn")
+GUNICORN_PIDS=$(sudo pgrep "gunicorn")
 
 # check if Gunicorn is running
-if [ -z "$GUNICORN_PID" ]
+if [ -z "$GUNICORN_PIDS" ]
 then
     echo "Gunicorn is not running"
     exit 1
@@ -13,10 +13,10 @@ fi
 
 echo "Restart Gunicorn..."
 
-for pid in $GUNICORN_PID
+for pid in $GUNICORN_PIDS
 do
     echo "killing process with pid $pid"
-    sudo kill -s HUP "$pid"
+    sudo kill -HUP "$pid"
 done
 
 # Wait for a short duration to allow workers to finish ongoing requests
