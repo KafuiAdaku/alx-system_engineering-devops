@@ -5,3 +5,7 @@ exec { 'set_ulimit':
   path    => ['/bin', '/usr/bin'],
 }
 
+exec { 'restart_nginx':
+  command => 'service nginx restart',
+  path    => ['/bin', '/usr/bin'],
+}
