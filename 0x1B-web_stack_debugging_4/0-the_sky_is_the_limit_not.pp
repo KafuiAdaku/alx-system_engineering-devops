@@ -1,11 +1,7 @@
 # A puppet manifest to change the limit of files to be opened by the webserver
 
-exec { 'set_ulimit':
-  command => 'sed -i \'s/ULIMIT="-n 15"/ULIMIT="-n 4096"/g\' /etc/default/nginx',
-  path    => ['/bin', '/usr/bin'],
-}
-
-exec { 'restart_nginx':
-  command => 'service nginx restart',
-  path    => ['/bin', '/usr/bin'],
+exec { 'nginx ulimit fix':
+  command => "bash -c \"sed -iE 's/^ULIMIT=.*/ULIMIT=\\\"-n 8192\\\"/' \
+/etc/default/nginx; service nginx restart\"",
+  path    => '/usr/bin:/usr/sbin:/bin'
 }
